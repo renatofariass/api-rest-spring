@@ -1,5 +1,7 @@
-package com.api.spring.Exceptions;
+package com.api.spring.exceptions.handler;
 
+import com.api.spring.exceptions.ResourceNotFoundException;
+import com.api.spring.exceptions.StandardError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

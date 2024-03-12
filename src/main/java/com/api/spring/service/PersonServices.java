@@ -1,6 +1,6 @@
 package com.api.spring.service;
 
-import com.api.spring.Exceptions.ResourceNotFoundException;
+import com.api.spring.exceptions.ResourceNotFoundException;
 import com.api.spring.controller.PersonController;
 import com.api.spring.model.Person;
 import com.api.spring.repository.PersonRepository;
