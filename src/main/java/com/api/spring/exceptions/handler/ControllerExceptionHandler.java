@@ -1,16 +1,16 @@
 package com.api.spring.exceptions.handler;
 
+import com.api.spring.exceptions.RequiredObjectIsNullException;
 import com.api.spring.exceptions.ResourceNotFoundException;
-import com.api.spring.exceptions.StandardError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<StandardError> allExceptions(Exception e, HttpServletRequest request) {
@@ -27,5 +27,11 @@ public class ControllerExceptionHandler {
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public ResponseEntity<StandardError> RequiredObjectIsNull(RequiredObjectIsNullException e, HttpServletRequest request) {
+        String error = HttpStatus.BAD_REQUEST.getReasonPhrase();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 }
-
