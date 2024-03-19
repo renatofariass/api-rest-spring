@@ -1,5 +1,6 @@
 package com.api.spring.service;
 
+import com.api.spring.exceptions.RequiredObjectIsNullException;
 import com.api.spring.exceptions.ResourceNotFoundException;
 import com.api.spring.controller.PersonController;
 import com.api.spring.model.Person;
@@ -36,14 +37,16 @@ public class PersonServices implements Serializable {
         return vo;
     }
 
-    public PersonVO create(PersonVO personVO) {
-        var entity = ModelMapperConverter.parseObject(personVO, Person.class);
+    public PersonVO create(PersonVO person) {
+        if (person == null) throw new RequiredObjectIsNullException();
+        var entity = ModelMapperConverter.parseObject(person, Person.class);
         var vo = ModelMapperConverter.parseObject(personRepository.save(entity), PersonVO.class);
         vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
         return vo;
     }
 
     public PersonVO update(PersonVO person) {
+        if(person == null) throw new RequiredObjectIsNullException();
         var entity = personRepository.findById(person.getKey())
         .orElseThrow(() -> new ResourceNotFoundException("Person ID not found."));
 
