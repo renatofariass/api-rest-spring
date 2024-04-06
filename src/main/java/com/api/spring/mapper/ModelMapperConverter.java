@@ -10,16 +10,6 @@ import java.util.List;
 public class ModelMapperConverter {
     private static ModelMapper modelMapper = new ModelMapper();
 
-    static {
-        modelMapper.createTypeMap(
-                Person.class,
-                PersonVO.class)
-                .addMapping(Person::getId, PersonVO::setKey);
-        modelMapper.createTypeMap(
-                        PersonVO.class,
-                        Person.class)
-                .addMapping(PersonVO::getKey, Person::setId);
-    }
     public static <O, D> D parseObject(O origin, Class<D> destination) {
         return modelMapper.map(origin, destination);
     }
