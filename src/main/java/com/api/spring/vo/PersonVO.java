@@ -11,8 +11,7 @@ import java.util.Objects;
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @JsonProperty("id")
-    private Long key;
+    private Long id;
     private String firstName;
     private String lastName;
     private String address;
@@ -21,12 +20,12 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     public PersonVO() {
     }
 
-    public Long getKey() {
-        return key;
+    public Long getId() {
+        return id;
     }
 
-    public void setKey(Long key) {
-        this.key = key;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -69,7 +68,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 
         PersonVO personVO = (PersonVO) o;
 
-        if (!Objects.equals(key, personVO.key)) return false;
+        if (!Objects.equals(id, personVO.id)) return false;
         if (!Objects.equals(firstName, personVO.firstName)) return false;
         if (!Objects.equals(lastName, personVO.lastName)) return false;
         if (!Objects.equals(address, personVO.address)) return false;
@@ -79,7 +78,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (key != null ? key.hashCode() : 0);
+        result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
