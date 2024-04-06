@@ -25,7 +25,7 @@ public class PersonServices implements Serializable {
     public List<PersonVO> findAll() {
         var persons = ModelMapperConverter.parseListObjects(personRepository.findAll(), PersonVO.class);
         persons.forEach(person -> person.add(linkTo(methodOn(PersonController.class)
-                .findById(person.getKey())).withSelfRel()));
+                .findById(person.getId())).withSelfRel()));
         return persons;
     }
 
@@ -41,13 +41,13 @@ public class PersonServices implements Serializable {
         if (person == null) throw new RequiredObjectIsNullException();
         var entity = ModelMapperConverter.parseObject(person, Person.class);
         var vo = ModelMapperConverter.parseObject(personRepository.save(entity), PersonVO.class);
-        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getId())).withSelfRel());
         return vo;
     }
 
     public PersonVO update(PersonVO person) {
         if(person == null) throw new RequiredObjectIsNullException();
-        var entity = personRepository.findById(person.getKey())
+        var entity = personRepository.findById(person.getId())
         .orElseThrow(() -> new ResourceNotFoundException("Person ID not found."));
 
         entity.setFirstName(person.getFirstName());
@@ -56,7 +56,7 @@ public class PersonServices implements Serializable {
         entity.setGender(person.getGender());
 
         var vo = ModelMapperConverter.parseObject(personRepository.save(entity), PersonVO.class);
-        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getId())).withSelfRel());
         return vo;
     }
 
