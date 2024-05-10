@@ -1,5 +1,6 @@
 package com.api.spring.exceptions.handler;
 
+import com.api.spring.exceptions.InvalidJwtAuthenticationException;
 import com.api.spring.exceptions.RequiredObjectIsNullException;
 import com.api.spring.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,6 +32,14 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> RequiredObjectIsNull(RequiredObjectIsNullException e, HttpServletRequest request) {
         String error = HttpStatus.BAD_REQUEST.getReasonPhrase();
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public ResponseEntity<StandardError> InvalidJwtAuthentication(InvalidJwtAuthenticationException e, HttpServletRequest request) {
+        String error = HttpStatus.FORBIDDEN.getReasonPhrase();
+        HttpStatus status = HttpStatus.FORBIDDEN;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
