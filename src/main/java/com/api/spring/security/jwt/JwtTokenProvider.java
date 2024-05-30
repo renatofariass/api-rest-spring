@@ -1,4 +1,4 @@
-package com.api.spring.securityJwt;
+package com.api.spring.security.jwt;
 
 import com.api.spring.exceptions.InvalidJwtAuthenticationException;
 import com.api.spring.vo.TokenVO;
