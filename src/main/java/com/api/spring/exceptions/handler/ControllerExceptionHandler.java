@@ -3,6 +3,7 @@ package com.api.spring.exceptions.handler;
 import com.api.spring.exceptions.InvalidJwtAuthenticationException;
 import com.api.spring.exceptions.RequiredObjectIsNullException;
 import com.api.spring.exceptions.ResourceNotFoundException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.time.Instant;
 public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<StandardError> allExceptions(Exception e, HttpServletRequest request) {
-        String error = "Internal Server Error";
+        String error = HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
