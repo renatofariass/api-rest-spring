@@ -1,4 +1,4 @@
-package com.api.spring.integrationtests.controller.withjson;
+package com.api.spring.integrationtests.controller.cors;
 
 import com.api.spring.configs.TestConfigs;
 import com.api.spring.integrationtests.testcontainers.AbstractIntegrationTest;
@@ -16,9 +16,6 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-
-import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertNotNull;
@@ -26,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class PersonControllerJsonTest extends AbstractIntegrationTest {
+public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 
     private static RequestSpecification specification;
     private static com.fasterxml.jackson.databind.ObjectMapper objectMapper;
