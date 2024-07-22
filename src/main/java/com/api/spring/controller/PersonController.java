@@ -103,6 +103,24 @@ public class PersonController implements Serializable {
         return ResponseEntity.ok().body(person);
     }
 
+    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Disable a person", description = "Disable a specific person by your id.",
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = PersonVO.class))
+                    ),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+            }
+    )
+    public ResponseEntity<PersonVO> disablePerson(@PathVariable Long id) {
+        PersonVO person = personServices.disablePerson(id);
+        return ResponseEntity.ok().body(person);
+    }
+
     @DeleteMapping(value = "/{id}")
     @Operation(summary = "Deletes a Person",
             description = "Deletes a Person by passing in a JSON or XML representation of the person!",

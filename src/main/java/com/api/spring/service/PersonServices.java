@@ -6,6 +6,7 @@ import com.api.spring.controller.PersonController;
 import com.api.spring.model.Person;
 import com.api.spring.repository.PersonRepository;
 import com.api.spring.mapper.ModelMapperConverter;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.api.spring.vo.PersonVO;
 
@@ -64,5 +65,16 @@ public class PersonServices implements Serializable {
         var entity = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Person ID not found."));
         personRepository.delete(entity);
+    }
+
+    @Transactional
+    public PersonVO disablePerson(Long id) {
+        personRepository.disablePerson(id);
+
+        var entity = personRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Person ID not found."));
+        var vo = ModelMapperConverter.parseObject(entity, PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        return vo;
     }
 }
