@@ -7,10 +7,14 @@ import com.api.spring.mapper.ModelMapperConverter;
 import com.api.spring.model.Book;
 import com.api.spring.repository.BookRepository;
 import com.api.spring.vo.BookVO;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -18,16 +22,23 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Service
 public class BookServices implements Serializable {
     private final BookRepository bookRepository;
+    private final PagedResourcesAssembler assembler;
 
-    public BookServices(BookRepository bookRepository) {
+    public BookServices(BookRepository bookRepository, PagedResourcesAssembler assembler) {
         this.bookRepository = bookRepository;
+        this.assembler = assembler;
     }
 
-    public List<BookVO> findAll() {
-        var books = ModelMapperConverter.parseListObjects(bookRepository.findAll(), BookVO.class);
-        books.forEach(book -> book.add(linkTo(methodOn(BookController.class)
+    public PagedModel<EntityModel<BookVO>> findAll(Pageable pageable) {
+        var bookPage = bookRepository.findAll(pageable);
+        var booksVOsPage = bookPage.map(b -> ModelMapperConverter.parseObject(b, BookVO.class));
+        booksVOsPage.map(book -> book.add(linkTo(methodOn(BookController.class)
                 .findById(book.getId())).withSelfRel()));
-        return books;
+
+        Link link = linkTo(methodOn(BookController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(),
+                "asc")).withSelfRel();
+
+        return assembler.toModel(booksVOsPage, link);
     }
 
     public BookVO findById(Long id) {
