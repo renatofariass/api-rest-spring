@@ -42,6 +42,19 @@ public class PersonServices implements Serializable {
         return assembler.toModel(personsVOsPage, link);
     }
 
+    public PagedModel<EntityModel<PersonVO>> findPersonByName(String firstName, Pageable pageable) {
+        var personPage = personRepository.findPersonByName(firstName, pageable);
+
+        var personsVOsPage = personPage.map(p -> ModelMapperConverter.parseObject(p, PersonVO.class));
+        personsVOsPage.map(person -> person.add(linkTo(methodOn(PersonController.class)
+                .findById(person.getId())).withSelfRel()));
+
+        Link link = linkTo(methodOn(PersonController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(),
+                "asc")).withSelfRel();
+
+        return assembler.toModel(personsVOsPage, link);
+    }
+
     public PersonVO findById(Long id) {
         var entity = personRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Person ID not found."));
