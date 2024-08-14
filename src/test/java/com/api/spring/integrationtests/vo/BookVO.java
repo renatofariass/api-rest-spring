@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.Objects;
 
 @XmlRootElement
-@JsonPropertyOrder({"id", "title", "author", "launch_date", "price"})
 public class BookVO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;

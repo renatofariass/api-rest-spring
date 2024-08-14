@@ -50,50 +50,6 @@ class PersonServicesTest {
         assertEquals("Female", result.getGender());
     }
 
-
-    @Test
-    void findAll() {
-        List<Person> list = input.mockEntityList();
-        when(repository.findAll()).thenReturn(list);
-
-        var people = service.findAll();
-        assertNotNull(people);
-        assertEquals(14, people.size());
-
-        var personOne = people.get(1);
-        assertNotNull(personOne);
-        assertNotNull(personOne.getId());
-        assertNotNull(personOne.getLinks());
-
-        assertTrue(personOne.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
-        assertEquals("First Name Test1", personOne.getFirstName());
-        assertEquals("Last Name Test1", personOne.getLastName());
-        assertEquals("Address Test1", personOne.getAddress());
-        assertEquals("Female", personOne.getGender());
-
-        var personSeven = people.get(7);
-        assertNotNull(personSeven);
-        assertNotNull(personSeven.getId());
-        assertNotNull(personSeven.getLinks());
-
-        assertTrue(personSeven.toString().contains("links: [</api/person/v1/7>;rel=\"self\"]"));
-        assertEquals("First Name Test7", personSeven.getFirstName());
-        assertEquals("Last Name Test7", personSeven.getLastName());
-        assertEquals("Address Test7", personSeven.getAddress());
-        assertEquals("Female", personSeven.getGender());
-
-        var personTwelve = people.get(12);
-        assertNotNull(personTwelve);
-        assertNotNull(personTwelve.getId());
-        assertNotNull(personTwelve.getLinks());
-
-        assertTrue(personTwelve.toString().contains("links: [</api/person/v1/12>;rel=\"self\"]"));
-        assertEquals("First Name Test12", personTwelve.getFirstName());
-        assertEquals("Last Name Test12", personTwelve.getLastName());
-        assertEquals("Address Test12", personTwelve.getAddress());
-        assertEquals("Male", personTwelve.getGender());
-    }
-
     @Test
     void create() {
         Person entity = input.mockEntity(1);

@@ -10,17 +10,11 @@ import java.util.Objects;
 @JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender", "enabled"})
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
     private static final long serialVersionUID = 1L;
-    @JsonProperty("id")
     private Long id;
-    @JsonProperty("first_name")
     private String firstName;
-    @JsonProperty("last_name")
     private String lastName;
-    @JsonProperty("address")
     private String address;
-    @JsonProperty("gender")
     private String gender;
-    @JsonProperty("enabled")
     private Boolean enabled;
 
     public PersonVO() {
