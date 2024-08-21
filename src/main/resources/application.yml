@@ -1,5 +1,7 @@
 cors:
   originPatterns: http://localhost:8080,http://localhost:3000
+file:
+  upload-dir: /Code/UploadDir
 security:
   jwt:
     token:
@@ -10,7 +12,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres?timezone=America/Sao_Paulo
     username: ${USERNAME}
     password: ${PASSWORD}
-
   jpa:
     properties:
       hibernate:
@@ -21,6 +22,12 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: false
+    servlet:
+      multipart:
+        enabled: true
+        file-size-threshold: 2KB
+        max-file-size: 200MB
+        max-request-size: 215MB
 springdoc:
   pathsToMatch:
     - /api/**/v1/**
