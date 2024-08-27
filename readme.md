@@ -39,15 +39,21 @@ Esse projeto foi elaborado durante o curso: [REST API's RESTFul do 0 à AWS c. S
 2 - PostgreSQL  
 3 - Maven (para gerar um .jar, caso queira rodar em um container docker)  
 4 - Docker (Se quiser rodar os testes de integração ou rodar o projeto em um container)  
-5 - IDE de sua preferência
-##### *Obs: antes de rodar o projeto, certifique-se de que você configurou a url e as variáveis de ambiente "USERNAME" e "PASSWORD" do seu PostgreSQL que estão no application.yml 
-```
-spring:
-datasource:
-url: jdbc:postgresql://localhost:5432/nome_do_banco?timezone=America/Sao_Paulo
-username: ${USERNAME}
-password: ${PASSWORD}
-```
+5 - Intellij ou Eclipse
+
+## Como rodar o projeto
+1. clone esse repositório
+2. abra o projeto na sua IDE e espere a IDE baixar as dependências do maven
+3. configure a url e as variáveis de ambiente no arquivo "application.yml" para conectar com o seu banco de dados.
+    ```
+    spring:
+      datasource:
+        url: jdbc:postgresql://localhost:5432/nome_do_banco?timezone=America/Sao_Paulo
+        username: ${USERNAME}
+        password: ${PASSWORD}
+    ```
+4. inicie a aplicação
+
 ## Como rodar o projeto em um container docker
 1. abra um terminal na pasta do projeto e rode o seguinte comando:
     ```
